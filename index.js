@@ -11,7 +11,7 @@ app.controller('MyController', ['$scope',  'constellationConsumer', function ($s
                     $scope.weather = so.Value.currently.icon;
                     $scope.temperature = String(so.Value.currently.temperature).split(".")[0];
 
-                    for (var i = 0; i < 48; i++) {
+                    for (var i = 0; i < 12; i++) {
                         if (so.Value.hourly.data[i].icon != $scope.weather) {
                             $scope.predictionWeather = so.Value.hourly.data[i].icon;
                             $scope.predictionTime = i;

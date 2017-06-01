@@ -47,11 +47,11 @@
         </div>
 
         <div class="meteotemperature">
-          <span>{{temperature}} C</span>
+          <span>{{temperature}} °C</span>
         </div>
 
         <div class="meteoevent">
-          <img src="assets/img/meteo/{{predictionWeather}}.png"/> <span>dans {{predictionTime}} heures</span>
+          <img src="assets/img/meteo/{{predictionWeather}}.png"/> <span>possible dans {{predictionTime}} heures</span>
         </div>
       </div>
 
@@ -59,12 +59,11 @@
         <span>Bonjour !</span>
       </div>
 
-      <div class="circle">
+      <div class="steps">
         <canvas id="canvas">
           <p>Désolé, votre navigateur ne supporte pas Canvas. Mettez-vous à jour</p>
         </canvas>
       </div>
-
       <script type="text/javascript">
         appear("bonjou", () => {
           disappear("bonjou");
@@ -73,19 +72,28 @@
         var canvas  = document.querySelector('#canvas');
         var context = canvas.getContext('2d');
 
-        var step = 6789;
+        var step = 1234;
         var objectif = 10000;
         var percent = step / objectif;
 
-        context.strokeStyle = "rgb(255, 255, 255)";
-        context.lineWidth = "5";
-        context.beginPath();
-        context.arc(75, 75, 50, -Math.PI/2, (3*Math.PI/2 + Math.PI/2)*percent - Math.PI/2);
-        context.stroke();
+        if(step < objectif){
+          context.strokeStyle = "rgb(255, 255, 255)";
+          context.lineWidth = "5";
+          context.beginPath();
+          context.arc(75, 75, 50, -Math.PI/2, (3*Math.PI/2 + Math.PI/2)*percent - Math.PI/2);
+          context.stroke();
+          context.fillStyle = "white";
+          context.font = "4vw Calibri,Geneva,Arial";
+          context.fillText(step, 45, 82);
+        } else {
+          var star = new Image();
+          star.src = 'assets/img/stars/star2.1.png';
+          context.drawImage(star, 15, 0, 150, 150);
+          context.fillStyle = "white";
+          context.font = "3.5vw Calibri,Geneva,Arial";
+          context.fillText(step, 53, 82);
+        }
 
-        context.font = "4vw Calibri,Geneva,Arial";
-        context.fillStyle = "white";
-        context.fillText(step, 45, 82);
       </script>
     </body>
 </html>
