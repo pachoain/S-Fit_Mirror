@@ -9,11 +9,12 @@ app.controller('MyController', ['$scope',  'constellationConsumer', function ($s
             constellation.registerStateObjectLink("*", "ForecastIO", "Lille", "*", (so) => {
                 $scope.$apply(() => {
                     $scope.weather = so.Value.currently.icon;
-                    $scope.temperature = so.Value.currently.temperature;
+                    $scope.temperature = String(so.Value.currently.temperature).split(".")[0];
 
                     for (var i = 0; i < 48; i++) {
                         if (so.Value.hourly.data[i].icon != $scope.weather) {
-                            $scope.prediction = so.Value.hourly.data[i].icon + ' dans ' + i + ' heures.';
+                            $scope.predictionWeather = so.Value.hourly.data[i].icon;
+                            $scope.predictionTime = i;
                             break;
                         }
                     }

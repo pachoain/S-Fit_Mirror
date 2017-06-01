@@ -61,14 +61,14 @@ body {
 }
 
 .meteoevent img {
-	width: 15%;
+	width: 25%;
 	height: auto;
 	margin-right:auto;
 	margin-left:auto;
 }
 
 .meteoevent span {
-	font-size: 1.3vw;
+	font-size: 2vw;
 	white-space: nowrap;
 	margin: auto;
 }

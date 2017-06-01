@@ -51,7 +51,7 @@
         </div>
 
         <div class="meteoevent">
-          <img src="assets/img/meteo/partly-cloudy-day.png"/> <span>{{prediction}}</span>
+          <img src="assets/img/meteo/{{predictionWeather}}.png"/> <span>dans {{predictionTime}} heures</span>
         </div>
       </div>
 
@@ -85,7 +85,7 @@
 
         context.font = "4vw Calibri,Geneva,Arial";
         context.fillStyle = "white";
-        context.fillText(step, 45, 85);
+        context.fillText(step, 45, 82);
       </script>
     </body>
 </html>
