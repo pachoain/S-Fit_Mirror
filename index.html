@@ -5,6 +5,7 @@
         <title>S-Fit Mirror</title>
         <link rel="icon" type="image/png" href="assets/img/sfit-logo-final.png" />
         <link rel="stylesheet" type="text/css" href="style.css">
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script type="text/javascript" src="index.js"></script>
     </head>
 
@@ -49,5 +50,15 @@
           <img src="assets/img/meteo/rain.png"/> <span>Il risque de pleuvoir dans 6 heures.</span>
         </div>
       </div>
+
+      <div id="bonjou" class="bonjou">
+        <span>Bonjour FDP</span>
+      </div>
+
+      <script type="text/javascript">
+        appear("bonjou", () => {
+          disappear("bonjou");
+        });
+      </script>
     </body>
 </html>
