@@ -1,3 +1,55 @@
+var app = angular.module('Mirror', ['ngConstellation']);
+app.controller('MyController', ['$scope',  'constellationConsumer', function ($scope, constellation) {
+    constellation.initializeClient("http://iberos.freeboxos.fr:80", "07acf484a0eb15fda2330d1bc73d9391ca2c4f1e", "MyConstellation");
+
+    constellation.onConnectionStateChanged((change) => {
+        if (change.newState === $.signalR.connectionState.connected) {
+            console.log("Je suis connecté !");
+
+            constellation.registerStateObjectLink("*", "ForecastIO", "Lille", "*", (so) => {
+                $scope.$apply(() => {
+                    $scope.weather = so.Value.currently.icon;
+                    $scope.temperature = so.Value.currently.temperature;
+
+                    for (var i = 0; i < 48; i++) {
+                        if (so.Value.hourly.data[i].icon != $scope.weather) {
+                            $scope.prediction = so.Value.hourly.data[i].icon + ' dans ' + i + ' heures.';
+                            break;
+                        }
+                    }
+                });
+            });
+
+            constellation.registerStateObjectLink("*", "MyDay", "Time", "*", (so) => {
+                $scope.$apply(() => {
+                    $scope.time = so.Value;
+                });
+            });
+
+            constellation.registerStateObjectLink("*", "MyDay", "Date", "*", (so) => {
+                $scope.$apply(() => {
+                    $scope.date = so.Value;
+                });
+            });
+
+            constellation.registerStateObjectLink("*", "DayInfo", "NameDay", "*", (so) => {
+                $scope.$apply(() => {
+                    $scope.nameDay = so.Value;
+                });
+            });
+
+            constellation.registerStateObjectLink("*", "DayInfo", "SunInfo", "*", (so) => {
+                $scope.$apply(() => {
+                    $scope.sunrise = so.Value.Sunrise.substring(0, 5);
+                    $scope.sunset = so.Value.Sunset.substring(0, 5);
+                });
+            });
+        }
+    });
+
+    constellation.connect();
+}]);
+
 function appear(idDiv, callback) {
   var div = document.getElementById(idDiv).style;
   var i = 0;

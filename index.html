@@ -1,52 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="Mirror">
     <head>
         <meta charset="utf-8" />
         <title>S-Fit Mirror</title>
         <link rel="icon" type="image/png" href="assets/img/sfit-logo-final.png" />
         <link rel="stylesheet" type="text/css" href="style.css">
+        <script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+        <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/signalr/jquery.signalr-2.2.1.min.js"></script>
+        <script type="text/javascript" src="http://cdn.myconstellation.io/js/Constellation-1.8.1.min.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+        <script type="text/javascript" src="http://cdn.myconstellation.io/js/ngConstellation-1.8.1.min.js"></script>
         <script type="text/javascript" src="index.js"></script>
     </head>
 
-    <body>
+    <body ng-controller="MyController">
       <div class="day" id="day">
         <div class="dayhour">
-          <span>10:40</span>
+          <span>{{time}}</span>
         </div>
 
         <div class="daydate">
-          <span>jeudi 1er juin</span>
+          <span>{{date}}</span>
         </div>
 
         <div class="daysaint">
-          <span>Saint Justin</span>
+          <span>{{nameDay}}</span>
         </div>
 
         <div class="srss" style="display: inline-flex;">
           <div>
             <img src="assets/img/meteo/sunrise.png"/>
             <br />
-            <span class="srhour">05:41</span>
+            <span class="srhour">{{sunrise}}</span>
           </div>
           <div>
             <img src="assets/img/meteo/sunset.png"/>
             <br />
-            <span class="sshour">21:51</span>
+            <span class="sshour">{{sunset}}</span>
           </div>
         </div>
       </div>
 
       <div class="meteo" id="meteo">
         <div class="meteoimg">
-          <img src="assets/img/meteo/clear-day.png" />
+          <img src="assets/img/meteo/{{weather}}.png" />
         </div>
 
         <div class="meteotemperature">
-          <span>19° C</span>
+          <span>{{temperature}} C</span>
         </div>
 
         <div class="meteoevent">
-          <img src="assets/img/meteo/partly-cloudy-day.png"/> <span>Un peu nuageux dans 2 heures.</span>
+          <img src="assets/img/meteo/partly-cloudy-day.png"/> <span>{{prediction}}</span>
         </div>
       </div>
 
