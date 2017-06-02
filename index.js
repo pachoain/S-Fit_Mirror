@@ -49,6 +49,25 @@ app.controller('MyController', ['$scope',  'constellationConsumer', function ($s
     });
 
     constellation.connect();
+
+    $scope.step = 6020;
+    $scope.goal = 10000;
+    var percent = $scope.step / $scope.goal;
+
+    if (percent < 1) {
+      var bar = new ProgressBar.Circle(container, {
+        strokeWidth: 6,
+        duration: -1,
+        color: '#ffffff',
+        trailColor: '#eee',
+        trailWidth: 1,
+        svgStyle: null
+      });
+      bar.animate(percent);
+      document.getElementById('goal').style.visibility = "hidden";
+    } else {
+      document.getElementById('goal').style.visibility = "visible";
+    }
 }]);
 
 function appear(idDiv, callback) {
@@ -79,3 +98,7 @@ function disappear(idDiv) {
   };
   f();
 }
+
+appear("bonjou", () => {
+  disappear("bonjou");
+});

@@ -32,6 +32,10 @@ body {
   font-size: 1.5vw;
 }
 
+.day .srss {
+	display: inline-flex;
+}
+
 .day .srss img {
   width: 50%;
   height: auto;
@@ -85,10 +89,36 @@ body {
 	white-space: nowrap;
 }
 
-#canvas {
+.steps {
+	width: 25%;
+	top: 83%; left: 1%;
+	text-align: center;
 	position: absolute;
-	top: 86%; left: 24%;
-  transform: translate(-50%, -50%);
-	width: 50%;
+	display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#container {
+	position: absolute;
+  width: 100%;
+  height: auto;
+}
+
+.steps span {
+  font-size: 4vw;
+}
+
+.steps #goal {
+	position: absolute;
+	width: 100%;
 	height: auto;
+}
+
+.steps #feet {
+	position: absolute;
+	width: 12%;
+	height: auto;
+	top: 130%; left: 50%;
+  transform: translate(-50%, -50%);
 }
