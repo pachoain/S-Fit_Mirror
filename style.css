@@ -122,3 +122,54 @@ body {
 	top: 130%; left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.calendar {
+	position: absolute;
+	width: 25%;
+	top: 51%; left: 74%;
+	height: 48%;
+	display: block;
+}
+
+.calendar .event {
+	width: 100%;
+	position: absolute;
+	border: 2px solid #ffffff;
+	border-radius: 5px;
+	text-align: center;
+	display: flex;
+}
+
+.calendar .event .textevent {
+	width: 100%;
+	margin: auto;
+}
+
+.calendar .event .textevent .content {
+	font-size: 2vh;
+	white-space: nowrap;
+}
+
+.calendar .event .textevent .horaires {
+	font-size: 1.5vh;
+	white-space: nowrap;
+}
+
+.calendar .event#event1 {
+	height: 15%;
+}
+
+.calendar .event#event2 {
+	height: 15%;
+	top: 16.66%;
+}
+
+.calendar .event#event3 {
+	height: 15%;
+	top: 49.98%
+}
+
+.calendar .event#event4 {
+	height: 15%;
+	top: 66.64%
+}
