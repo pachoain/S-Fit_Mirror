@@ -45,6 +45,23 @@ app.controller('MyController', ['$scope',  'constellationConsumer', function ($s
                     $scope.sunset = so.Value.Sunset.substring(0, 5);
                 });
             });
+
+            constellation.registerStateObjectLink("*", "ConstellationCalendar", "TodayEvents", "*", (so) => {
+                $scope.$apply(() => {
+                  if (so.Value) {
+                    so.Value.forEach((event) => {
+                      let tmp = JSON.parse(event);
+                      console.log(tmp.summary);
+                      console.log(tmp.start.dateTime);
+                      console.log(tmp.end.dateTime);
+                      if (tmp.location) {
+                        console.log(tmp.location);
+                      }
+                      document.getElementById('calendar').innerHTML += '<div class="event" id="event'+tmp.id+'"><span class="textevent"><span class="content">'+tmp.summary+'</span><br /><span class="horaires"> 13h00 - 14h00 / '+tmp.location+'</span></span></div>';
+                    });
+                  }
+                });
+            });
         }
     });
 
