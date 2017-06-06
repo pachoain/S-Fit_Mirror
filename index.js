@@ -21,13 +21,13 @@ app.controller('MyController', ['$scope',  'constellationConsumer', function ($s
                 });
             });
 
-            constellation.registerStateObjectLink("*", "MyDay", "Time", "*", (so) => {
+            constellation.registerStateObjectLink("*", "DayInfo", "Time", "*", (so) => {
                 $scope.$apply(() => {
                     $scope.time = so.Value;
                 });
             });
 
-            constellation.registerStateObjectLink("*", "MyDay", "Date", "*", (so) => {
+            constellation.registerStateObjectLink("*", "DayInfo", "Date", "*", (so) => {
                 $scope.$apply(() => {
                     $scope.date = so.Value;
                 });
