@@ -1,6 +1,6 @@
 var app = angular.module('Mirror', ['ngConstellation']);
 var sizeU = 7.5 / 60; // 1h = 7.5% pour 12 h
-var topU = 0.139; //
+var topU = 8.33 / 60; // 1h d'ecart = 8.33%
 app.controller('MyController', ['$scope',  'constellationConsumer', function ($scope, constellation) {
     constellation.initializeClient("http://iberos.freeboxos.fr:80", "07acf484a0eb15fda2330d1bc73d9391ca2c4f1e", "MyConstellation");
 
@@ -53,21 +53,28 @@ app.controller('MyController', ['$scope',  'constellationConsumer', function ($s
                   document.getElementById('calendar').innerHTML = '';
                   if (so.Value) {
                     so.Value.forEach((event) => {
+                      document.getElementById('calendar').style.borderTop = "2px dashed silver";
                       let tmp = JSON.parse(event);
-
                       let startDate = new Date(tmp.start.dateTime.split('+')[0]);
                       let endDate = new Date(tmp.end.dateTime.split('+')[0]);
                       let actualTime = new Date();
                       let dif = Math.round((startDate.getTime()-actualTime.getTime())/60000);
+                      let difEnd = Math.round((endDate.getTime()-actualTime.getTime())/60000);
                       let fromTop = dif * topU;
                       let last = (endDate.getTime()-startDate.getTime())/60000;
                       let size = last * sizeU;
-                      if(dif >= 0) {
+                      if(difEnd >= 0) {
                         document.getElementById('calendar').innerHTML += '<div class="event" id="event'+tmp.id+'"><span class="textevent"><span class="content">'+tmp.summary+'</span><br /><span class="horaires">'+startDate.toLocaleTimeString().substring(0, 5)+' - '+endDate.toLocaleTimeString().substring(0, 5)+' / '+tmp.location+'</span></span></div>';
                         document.getElementById('event'+tmp.id).style.height = size+"%";
                         document.getElementById('event'+tmp.id).style.top = fromTop+"%";
+                        if (dif <= 0) {
+                          document.getElementById('event'+tmp.id).style.opacity = 0.5;
+                        }
                       }
                     });
+                  } else {
+                    document.getElementById('calendar').style.border = "none";
+                    document.getElementById('calendar').innerHTML += '<div class="noEvent" id="noEvent"><span>Rien de prévu,<br /> profitez bien !</span></div>';
                   }
                 });
             });
@@ -101,9 +108,9 @@ function appear(idDiv, callback) {
   var i = 0;
   var f = function() {
     div.opacity = i;
-    i = i+0.02;
-    if(i<=1) {
-      setTimeout(f,30);
+    i = i + 0.02;
+    if(i <= 1) {
+      setTimeout(f, 30);
     }
     else {
       callback();
@@ -117,12 +124,13 @@ function disappear(idDiv) {
   var i = 1;
   var f = function() {
     div.opacity = i;
-    i = i-0.02;
-    if(i>=0) {
-      setTimeout(f,30);
+    i = i - 0.02;
+    if(i >= 0) {
+      setTimeout(f, 30);
     }
   };
   f();
+  div.opacity = 0;
 }
 
 appear("bonjou", () => {
