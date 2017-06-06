@@ -138,6 +138,7 @@ body {
 	border-radius: 5px;
 	text-align: center;
 	display: flex;
+	line-height: 1.5vw;
 }
 
 .calendar .event .textevent {
@@ -146,12 +147,12 @@ body {
 }
 
 .calendar .event .textevent .content {
-	font-size: 2vh;
+	font-size: 1.5vw;
 	white-space: nowrap;
 }
 
 .calendar .event .textevent .horaires {
-	font-size: 1.5vh;
+	font-size: 1vw;
 	white-space: nowrap;
 }
 

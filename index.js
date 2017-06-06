@@ -57,7 +57,13 @@ app.controller('MyController', ['$scope',  'constellationConsumer', function ($s
                       if (tmp.location) {
                         console.log(tmp.location);
                       }
-                      document.getElementById('calendar').innerHTML += '<div class="event" id="event'+tmp.id+'"><span class="textevent"><span class="content">'+tmp.summary+'</span><br /><span class="horaires"> 13h00 - 14h00 / '+tmp.location+'</span></span></div>';
+                      document.getElementById('calendar').innerHTML = '<div class="event" id="event'+tmp.id+'"><span class="textevent"><span class="content">'+tmp.summary+'</span><br /><span class="horaires"> 13h00 - 14h00 / '+tmp.location+'</span></span></div>';
+                      let last = 60;
+                      let size = last * 0.125;
+                      document.getElementById('event'+tmp.id).style.height = size+"%";
+                      let dif = 122;
+                      let fromTop = dif*0.139;
+                      document.getElementById('event'+tmp.id).style.top = fromTop+"%";
                     });
                   }
                 });
