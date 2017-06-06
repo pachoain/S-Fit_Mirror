@@ -1,4 +1,6 @@
 var app = angular.module('Mirror', ['ngConstellation']);
+var sizeU = 7.5 / 60; // 1h = 7.5% pour 12 h
+var topU = 0.139; //
 app.controller('MyController', ['$scope',  'constellationConsumer', function ($scope, constellation) {
     constellation.initializeClient("http://iberos.freeboxos.fr:80", "07acf484a0eb15fda2330d1bc73d9391ca2c4f1e", "MyConstellation");
 
@@ -48,22 +50,23 @@ app.controller('MyController', ['$scope',  'constellationConsumer', function ($s
 
             constellation.registerStateObjectLink("*", "ConstellationCalendar", "TodayEvents", "*", (so) => {
                 $scope.$apply(() => {
+                  document.getElementById('calendar').innerHTML = '';
                   if (so.Value) {
                     so.Value.forEach((event) => {
                       let tmp = JSON.parse(event);
-                      console.log(tmp.summary);
-                      console.log(tmp.start.dateTime);
-                      console.log(tmp.end.dateTime);
-                      if (tmp.location) {
-                        console.log(tmp.location);
+
+                      let startDate = new Date(tmp.start.dateTime.split('+')[0]);
+                      let endDate = new Date(tmp.end.dateTime.split('+')[0]);
+                      let actualTime = new Date();
+                      let dif = Math.round((startDate.getTime()-actualTime.getTime())/60000);
+                      let fromTop = dif * topU;
+                      let last = (endDate.getTime()-startDate.getTime())/60000;
+                      let size = last * sizeU;
+                      if(dif >= 0) {
+                        document.getElementById('calendar').innerHTML += '<div class="event" id="event'+tmp.id+'"><span class="textevent"><span class="content">'+tmp.summary+'</span><br /><span class="horaires">'+startDate.toLocaleTimeString().substring(0, 5)+' - '+endDate.toLocaleTimeString().substring(0, 5)+' / '+tmp.location+'</span></span></div>';
+                        document.getElementById('event'+tmp.id).style.height = size+"%";
+                        document.getElementById('event'+tmp.id).style.top = fromTop+"%";
                       }
-                      document.getElementById('calendar').innerHTML = '<div class="event" id="event'+tmp.id+'"><span class="textevent"><span class="content">'+tmp.summary+'</span><br /><span class="horaires"> 13h00 - 14h00 / '+tmp.location+'</span></span></div>';
-                      let last = 60;
-                      let size = last * 0.125;
-                      document.getElementById('event'+tmp.id).style.height = size+"%";
-                      let dif = 122;
-                      let fromTop = dif*0.139;
-                      document.getElementById('event'+tmp.id).style.top = fromTop+"%";
                     });
                   }
                 });
