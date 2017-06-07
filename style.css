@@ -105,7 +105,15 @@ body {
   height: auto;
 }
 
-.steps span {
+.steps .reached {
+	font-size: 3vw;
+	position: absolute;
+	margin-top: -320px;
+	text-align: center;
+	margin-left: 8%;
+}
+
+.steps .stepSpan {
   font-size: 4vw;
 }
 

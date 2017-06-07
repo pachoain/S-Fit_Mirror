@@ -68,7 +68,7 @@ app.controller('MyController', ['$scope',  'constellationConsumer', function ($s
                         document.getElementById('event'+tmp.id).style.height = size+"%";
                         document.getElementById('event'+tmp.id).style.top = fromTop+"%";
                         if (dif <= 0) {
-                          document.getElementById('event'+tmp.id).style.opacity = 0.75;
+                          document.getElementById('event'+tmp.id).style.opacity = 0.65;
                         }
                       }
                     });
@@ -83,7 +83,7 @@ app.controller('MyController', ['$scope',  'constellationConsumer', function ($s
 
     constellation.connect();
 
-    $scope.step = 6020;
+    $scope.step = 6432;
     $scope.goal = 10000;
     var percent = $scope.step / $scope.goal;
 
@@ -98,8 +98,10 @@ app.controller('MyController', ['$scope',  'constellationConsumer', function ($s
       });
       bar.animate(percent);
       document.getElementById('goal').style.visibility = "hidden";
+      document.getElementById('reached').style.visibility = "hidden";
     } else {
       document.getElementById('goal').style.visibility = "visible";
+      document.getElementById('reached').style.visibility = "visible";
     }
 }]);
 
