@@ -68,7 +68,7 @@ app.controller('MyController', ['$scope',  'constellationConsumer', function ($s
                         document.getElementById('event'+tmp.id).style.height = size+"%";
                         document.getElementById('event'+tmp.id).style.top = fromTop+"%";
                         if (dif <= 0) {
-                          document.getElementById('event'+tmp.id).style.opacity = 0.5;
+                          document.getElementById('event'+tmp.id).style.opacity = 0.75;
                         }
                       }
                     });

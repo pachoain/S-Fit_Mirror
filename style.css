@@ -52,7 +52,7 @@ body {
 }
 
 .meteoimg img {
-  width: 100%;
+  width: 75%;
   height: auto;
 }
 
@@ -82,11 +82,11 @@ body {
 	top: 50%; left: 50%;
   transform: translate(-50%, -50%);
 	cursor: default;
+	text-align: center;
 }
 
 .bonjou span {
 	font-size: 10vw;
-	white-space: nowrap;
 }
 
 .steps {
@@ -166,3 +166,26 @@ body {
 	transform: translate(-50%, -50%);
 	white-space: nowrap;
 }
+
+/** Si vous êtes sur l'écran tout miskine, décommentez la suite **/
+/*.bonjou {
+	margin-left: 6% !important;
+	top: 40% !important;
+}
+
+.bonjou span {
+	font-size: 9vw !important;
+}
+
+.day {
+	margin-left: 12% !important;
+}
+
+.steps {
+	top: 77% !important;
+	margin-left: 12% !important;
+}
+
+.calendar {
+	top: 40% !important;
+}*/
