@@ -4,6 +4,8 @@ var topU = 8.33 / 60; // 1h d'ecart = 8.33%
 app.controller('MyController', ['$scope',  'constellationConsumer', function ($scope, constellation) {
     constellation.initializeClient("http://iberos.freeboxos.fr:80", "07acf484a0eb15fda2330d1bc73d9391ca2c4f1e", "MyConstellation");
 
+    $scope.predictionWeather = null;
+
     constellation.onConnectionStateChanged((change) => {
         if (change.newState === $.signalR.connectionState.connected) {
             console.log("Je suis connecté !");

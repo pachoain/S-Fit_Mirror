@@ -11,6 +11,7 @@
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
         <script type="text/javascript" src="http://cdn.myconstellation.io/js/ngConstellation-1.8.1.min.js"></script>
         <script type="text/javascript" src="assets/libs/progressbar.min.js"></script>
+        <script type="text/javascript" src="app.js"></script>
     </head>
 
     <body ng-controller="MyController">
@@ -42,16 +43,22 @@
       </div>
 
       <div class="meteo" id="meteo">
-        <div class="meteoimg">
-          <img src="assets/img/meteo/{{weather}}.png" />
+        <div class="meteoimg" ng-if="weather">
+          <img ng-src="assets/img/meteo/{{weather}}.png" />
         </div>
 
         <div class="meteotemperature">
           <span>{{temperature}} °C</span>
         </div>
 
-        <div class="meteoevent">
-          <img src="assets/img/meteo/{{predictionWeather}}.png"/> <span>possible dans {{predictionTime}} heure(s)</span>
+        <div class="meteoevent" ng-if="predictionWeather &amp;&amp; predictionTime>1">
+          <img ng-src="assets/img/meteo/{{predictionWeather}}.png"/> <span>possible dans {{predictionTime}} heures</span>
+        </div>
+        <div class="meteoevent" ng-if="predictionWeather &amp;&amp; predictionTime===1">
+          <img ng-src="assets/img/meteo/{{predictionWeather}}.png"/> <span>possible dans {{predictionTime}} heure</span>
+        </div>
+        <div class="meteoevent" ng-if="predictionWeather!='' &amp;&amp; predictionTime===0">
+          <img ng-src="assets/img/meteo/{{predictionWeather}}.png"/> <span>Risque imminent</span>
         </div>
       </div>
 
