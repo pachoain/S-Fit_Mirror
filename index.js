@@ -80,6 +80,13 @@ app.controller('MyController', ['$scope',  'constellationConsumer', ($scope, con
                   }
                 });
             });
+
+            constellation.registerStateObjectLink("*", "ConstellationSocketConnector", "DetectedUser", "*", (so) => {
+                $scope.$apply(() => {
+                    $scope.hello = 'Bonjour ' + so.Value.split('_')[0];
+                    sayHello();
+                });
+            });
         }
     });
 
@@ -137,6 +144,8 @@ function disappear(idDiv) {
   div.opacity = 0;
 }
 
-appear("bonjou", () => {
-  disappear("bonjou");
-});
+function sayHello() {
+    appear("bonjou", () => {
+      disappear("bonjou");
+    });
+}
