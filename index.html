@@ -65,15 +65,17 @@
         <span>{{hello}}</span>
       </div>
 
-      <div class="steps">
-        <div id="container"></div>
-        <span class="reached" id="reached"> Objectif atteint !</span>
-        <img id="feet" src="assets/img/pied2.0.png" />
-        <img id="goal" src="assets/img/stars/star2.1.png" />
-        <span class="stepSpan">{{step}}</span>
-      </div>
+      <div ng-hide="username === ''">
+          <div class="steps">
+            <div id="container"></div>
+            <span class="reached" id="reached"> Objectif atteint !</span>
+            <img id="feet" src="assets/img/pied2.0.png" />
+            <img id="goal" src="assets/img/stars/star2.1.png" />
+            <span class="stepSpan">{{step}}</span>
+          </div>
 
-      <div class="calendar" id="calendar"></div>
+          <div class="calendar" id="calendar"></div>
+      </div>
 
       <script type="text/javascript" src="index.js"></script>
     </body>

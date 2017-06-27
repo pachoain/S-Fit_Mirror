@@ -50,41 +50,82 @@ app.controller('MyController', ['$scope',  'constellationConsumer', ($scope, con
                 });
             });
 
-            constellation.registerStateObjectLink("*", "ConstellationCalendar", "TodayEvents", "*", (so) => {
-                $scope.$apply(() => {
-                  document.getElementById('calendar').innerHTML = '';
-                  if (so.Value) {
-                    so.Value.forEach((event) => {
-                      document.getElementById('calendar').style.borderTop = "2px dashed silver";
-                      let tmp = JSON.parse(event);
-                      let startDate = new Date(tmp.start.dateTime.split('+')[0]);
-                      let endDate = new Date(tmp.end.dateTime.split('+')[0]);
-                      let actualTime = new Date();
-                      let dif = Math.round((startDate.getTime()-actualTime.getTime())/60000);
-                      let difEnd = Math.round((endDate.getTime()-actualTime.getTime())/60000);
-                      let fromTop = dif * topU;
-                      let last = (endDate.getTime()-startDate.getTime())/60000;
-                      let size = last * sizeU;
-                      if(difEnd >= 0) {
-                        document.getElementById('calendar').innerHTML += '<div class="event" id="event'+tmp.id+'"><span class="textevent"><span class="content">'+tmp.summary+'</span><br /><span class="horaires">'+startDate.toLocaleTimeString().substring(0, 5)+' - '+endDate.toLocaleTimeString().substring(0, 5)+' / '+tmp.location+'</span></span></div>';
-                        document.getElementById('event'+tmp.id).style.height = size+"%";
-                        document.getElementById('event'+tmp.id).style.top = fromTop+"%";
-                        if (dif <= 0) {
-                          document.getElementById('event'+tmp.id).style.opacity = 0.65;
-                        }
-                      }
-                    });
-                  } else {
-                    document.getElementById('calendar').style.border = "none";
-                    document.getElementById('calendar').innerHTML += '<div class="noEvent" id="noEvent"><span>Rien de prévu,<br /> profitez bien !</span></div>';
-                  }
+            $scope.subscribeSteps = (user) => {
+                constellation.registerStateObjectLink('*', 'SfitDataManager', 'TodaySteps' + user, '*', (so) => {
+                    if (so.Name.split('TodaySteps')[1] == $scope.username) {
+                        $scope.$apply(() => {
+                            var tmp = JSON.parse(so.Value);
+                            $scope.step = tmp.step;
+                        });
+                    }
                 });
-            });
+            }
+
+            $scope.subscribeCalendar = (user) => {
+                constellation.registerStateObjectLink("*", "*", "TodayEvents" + user, "*", (so) => {
+                    if (so.Name.split('TodayEvents')[1] === $scope.username) {
+                        $scope.$apply(() => {
+                            document.getElementById('calendar').innerHTML = '';
+                                if (so.Value) {
+                                    so.Value.forEach((event) => {
+                                        document.getElementById('calendar').style.borderTop = "2px dashed silver";
+                                        let tmp = JSON.parse(event);
+                                        let startDate = new Date(tmp.start.dateTime.split('+')[0]);
+                                        let endDate = new Date(tmp.end.dateTime.split('+')[0]);
+                                        let actualTime = new Date();
+                                        let dif = Math.round((startDate.getTime()-actualTime.getTime())/60000);
+                                        let difEnd = Math.round((endDate.getTime()-actualTime.getTime())/60000);
+                                        let fromTop = dif * topU;
+                                        let last = (endDate.getTime()-startDate.getTime())/60000;
+                                        let size = last * sizeU;
+                                        if(difEnd >= 0) {
+                                            document.getElementById('calendar').innerHTML += '<div class="event" id="event'+tmp.id+'"><span class="textevent"><span class="content">'+tmp.summary+'</span><br /><span class="horaires">'+startDate.toLocaleTimeString().substring(0, 5)+' - '+endDate.toLocaleTimeString().substring(0, 5)+' / '+tmp.location+'</span></span></div>';
+                                            document.getElementById('event'+tmp.id).style.height = size+"%";
+                                            document.getElementById('event'+tmp.id).style.top = fromTop+"%";
+                                            if (dif <= 0) {
+                                                document.getElementById('event'+tmp.id).style.opacity = 0.65;
+                                            }
+                                        }
+                                    });
+                              }
+                              else {
+                                  document.getElementById('calendar').style.border = "none";
+                                  document.getElementById('calendar').innerHTML += '<div class="noEvent" id="noEvent"><span>Rien de prévu,<br /> profitez bien !</span></div>';
+                              }
+                        });
+                    }
+                    else {
+                        document.getElementById('calendar').innerHTML = '';
+                    }
+                });
+            }
 
             constellation.registerStateObjectLink("*", "ConstellationSocketConnector", "DetectedUser", "*", (so) => {
                 $scope.$apply(() => {
-                    $scope.hello = 'Bonjour ' + so.Value.split('_')[0];
-                    sayHello();
+                    $scope.username = so.Value;
+
+                    if (so.Value !== '' && $scope.code === false) {
+                        $scope.hello = 'Bonjour ' + so.Value.split('_')[0];
+                        sayHello();
+
+                        $scope.subscribeSteps($scope.username);
+                        $scope.subscribeCalendar($scope.username);
+                    }
+                });
+            });
+
+            constellation.registerStateObjectLink("*", "SfitDataManager", "MirorPasscode", "*", (so) => {
+                $scope.$apply(() => {
+                    if (so.Value !== '') {
+                        $scope.hello = so.Value;
+                        appear("bonjou", () => {
+                            $scope.code = true;
+                        });
+                    }
+                    else {
+                        disappear("bonjou");
+                        $scope.code = false;
+                    }
                 });
             });
         }
