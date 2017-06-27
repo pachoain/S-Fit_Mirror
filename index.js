@@ -1,6 +1,8 @@
 var app = angular.module('Mirror', ['ngConstellation']);
 var sizeU = 7.5 / 60; // 1h = 7.5% pour 12 h
 var topU = 8.33 / 60; // 1h d'ecart = 8.33%
+var steps;
+var goal;
 app.controller('MyController', ['$scope',  'constellationConsumer', ($scope, constellation) => {
     constellation.initializeClient("http://iberos.freeboxos.fr:80", "07acf484a0eb15fda2330d1bc73d9391ca2c4f1e", "MyConstellation");
 
@@ -56,6 +58,32 @@ app.controller('MyController', ['$scope',  'constellationConsumer', ($scope, con
                         $scope.$apply(() => {
                             var tmp = JSON.parse(so.Value);
                             $scope.step = tmp.step;
+                            $scope.goal = tmp.goal;
+                            $scope.percent = $scope.step / $scope.goal;
+                            if($scope.percent < 1){
+                              if($scope.bar !== undefined){
+                                $scope.bar.destroy();
+                              }
+                              if($scope.bar === undefined){
+                                $scope.bar = {};
+                              }
+                              $scope.bar = new ProgressBar.Circle(container, {
+                                strokeWidth: 6,
+                                duration: -1,
+                                color: '#FFFFFF',
+                                trailColor: '#eee',
+                                trailWidth: 1,
+                                svgStyle: null
+                              });
+                              $scope.bar.animate($scope.percent);
+                              document.getElementById('container').style.visibility = "visible";
+                              document.getElementById('goal').style.visibility = "hidden";
+                              document.getElementById('reached').style.visibility = "hidden";
+                            } else {
+                              document.getElementById('container').style.visibility = "hidden";
+                              document.getElementById('goal').style.visibility = "visible";
+                              document.getElementById('reached').style.visibility = "visible";
+                            }
                         });
                     }
                 });
@@ -132,27 +160,6 @@ app.controller('MyController', ['$scope',  'constellationConsumer', ($scope, con
     });
 
     constellation.connect();
-
-    $scope.step = 6432;
-    $scope.goal = 10000;
-    var percent = $scope.step / $scope.goal;
-
-    if (percent < 1) {
-      var bar = new ProgressBar.Circle(container, {
-        strokeWidth: 6,
-        duration: -1,
-        color: '#ffffff',
-        trailColor: '#eee',
-        trailWidth: 1,
-        svgStyle: null
-      });
-      bar.animate(percent);
-      document.getElementById('goal').style.visibility = "hidden";
-      document.getElementById('reached').style.visibility = "hidden";
-    } else {
-      document.getElementById('goal').style.visibility = "visible";
-      document.getElementById('reached').style.visibility = "visible";
-    }
 }]);
 
 function appear(idDiv, callback) {
