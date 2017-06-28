@@ -14,19 +14,17 @@
     </head>
 
     <body ng-controller="MyController">
+      <!-- Informations of the day -->
       <div class="day" id="day">
         <div class="dayhour">
           <span>{{time}}</span>
         </div>
-
         <div class="daydate">
           <span>{{date}}</span>
         </div>
-
         <div class="daysaint">
           <span>{{nameDay}}</span>
         </div>
-
         <div class="srss" style="display: inline-flex;">
           <div>
             <img src="assets/img/meteo/sunrise.png"/>
@@ -41,15 +39,14 @@
         </div>
       </div>
 
+      <!-- Meteorological events -->
       <div class="meteo" id="meteo">
         <div class="meteoimg" ng-if="weather">
           <img ng-src="assets/img/meteo/{{weather}}.png" />
         </div>
-
         <div class="meteotemperature">
           <span>{{temperature}} °C</span>
         </div>
-
         <div class="meteoevent" ng-if="predictionWeather &amp;&amp; predictionTime>1">
           <img ng-src="assets/img/meteo/{{predictionWeather}}.png"/> <span>possible dans {{predictionTime}} heures</span>
         </div>
@@ -61,10 +58,12 @@
         </div>
       </div>
 
+      <!-- Hello when someone is recognized -->
       <div id="bonjou" class="bonjou">
         <span>{{hello}}</span>
       </div>
 
+      <!-- Step counter transforming in star when goal is reached -->
       <div ng-hide="username === ''">
           <div class="steps">
             <div id="container"></div>
@@ -74,6 +73,7 @@
             <span class="stepSpan">{{step}}</span>
           </div>
 
+          <!-- Calendar with events -->
           <div class="calendar" id="calendar"></div>
       </div>
 
