@@ -111,6 +111,7 @@ body {
 	margin-top: -320px;
 	text-align: center;
 	margin-left: 8%;
+		visibility: hidden;
 }
 
 .steps .stepSpan {
@@ -121,6 +122,7 @@ body {
 	position: absolute;
 	width: 100%;
 	height: auto;
+	visibility: hidden;
 }
 
 .steps #feet {
@@ -129,6 +131,7 @@ body {
 	height: auto;
 	top: 130%; left: 50%;
   transform: translate(-50%, -50%);
+		visibility: hidden;
 }
 
 .calendar {
